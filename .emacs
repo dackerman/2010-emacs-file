@@ -17,9 +17,10 @@
 (setq custom-file "~/.emacs-custom.el")
 (load custom-file)
 
-; Get rid of pesky menu bar and tool bar.  We don't need them.
+; Get rid of pesky menu bar, tool bar, and scroll bar.  We don't need them.
 (menu-bar-mode -1)
 (tool-bar-mode -1)
+(scroll-bar-mode 0)
 
 ; Line numbers
 (global-linum-mode 1)
