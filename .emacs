@@ -41,7 +41,7 @@
 
 ; Start a server for emacsclient
 (server-start)
-nnnnn
+
 ; Handle XML better with NXML Mode (jclark.com)
 (add-to-list 'auto-mode-alist '("\\.xml\\'" . nxml-mode))
 
