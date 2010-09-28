@@ -3,6 +3,8 @@
 ;; Credits for a good chunk of these features:
 ;; - http://xahlee.org/emacs/emacs23_features.html
 ;; - http://xahlee.org/emacs/emacs_make_modern.html
+;; - http://code.google.com/p/js2-mode/wiki/InstallationInstructions
+;; - http://github.com/nickewing/dotfiles/blob/master/emacs
 ;;
 ;; Some Emacs key tricks that I haven't mastered yet:
 ;; - prefix every line of a region: M-x string-rectangle [text-to-insert] (or C-x r t)
@@ -11,12 +13,25 @@
 ; Set load path
 (add-to-list 'load-path "~/emacs/")
 
+; Set custom emacs for work/home specifics
+(setq custom-file "~/.emacs-custom.el")
+(load custom-file)
+
 ; Get rid of pesky menu bar and tool bar.  We don't need them.
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 
 ; Line numbers
 (global-linum-mode 1)
+
+; ido Mode
+(ido-mode t)
+(ido-everywhere t)
+(setq ido-enable-prefix nil
+      ido-enable-flex-matching t
+      ido-create-new-buffer 'always
+      ido-use-filename-at-point 'guess
+      ido-max-prospects 10)
 
 ; Highlight the other paren when hovering over one of them
 (show-paren-mode 1)
@@ -81,4 +96,4 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 82 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
+ '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 75 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
