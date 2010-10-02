@@ -10,12 +10,23 @@
 ;; - prefix every line of a region: M-x string-rectangle [text-to-insert] (or C-x r t)
 ;; - delete x characters in a rectangle: M-x kill-rectangle (or C-x r k)
 
+; David Ackerman's backward-kill-word!
+; Tweaked from scottfrazer on stackoverflow at http://goo.gl/S9c1
+(defun daves-backward-kill-word ()
+  "Behaves like normal backward-kill-word, except:
+    - Killing while in whitespace only kills the whitespace.
+    - Killing while in special chars only kills the special chars."
+  (interactive)
+  (if (bolp) (backward-delete-char 1)
+  (if (string-match "^\\s-+$" (buffer-substring (point-at-bol) (point))) (kill-region (point-at-bol) (point))
+  (if (string-match "[\]\[()*+\\-]+$" (buffer-substring (point-at-bol) (point))) (kill-region (+ (point-at-bol) (match-beginning 0)) (point))
+  (if (string-match "[[:blank:]]+$" (buffer-substring (point-at-bol) (point))) (kill-region (+ (point-at-bol) (match-beginning 0)) (point))
+  (backward-kill-word 1))))))
+
+(global-set-key [C-backspace] 'daves-backward-kill-word)
+
 ; Set load path
 (add-to-list 'load-path "~/emacs/")
-
-; Set custom emacs for work/home specifics
-(setq custom-file "~/.emacs-custom.el")
-(load custom-file)
 
 ; Get rid of pesky menu bar, tool bar, and scroll bar.  We don't need them.
 (menu-bar-mode -1)
