@@ -9,6 +9,7 @@
 ;; Some Emacs key tricks that I haven't mastered yet:
 ;; - prefix every line of a region: M-x string-rectangle [text-to-insert] (or C-x r t)
 ;; - delete x characters in a rectangle: M-x kill-rectangle (or C-x r k)
+;; --------------------------------------------------------------------------------
 
 ; David Ackerman's backward-kill-word!
 ; Tweaked from scottfrazer on stackoverflow at http://goo.gl/S9c1
@@ -18,10 +19,9 @@
     - Killing while in special chars only kills the special chars."
   (interactive)
   (if (bolp) (backward-delete-char 1)
-  (if (string-match "^\\s-+$" (buffer-substring (point-at-bol) (point))) (kill-region (point-at-bol) (point))
   (if (string-match "[\]\[()*+\\-]+$" (buffer-substring (point-at-bol) (point))) (kill-region (+ (point-at-bol) (match-beginning 0)) (point))
   (if (string-match "[[:blank:]]+$" (buffer-substring (point-at-bol) (point))) (kill-region (+ (point-at-bol) (match-beginning 0)) (point))
-  (backward-kill-word 1))))))
+  (backward-kill-word 1)))))
 
 (global-set-key [C-backspace] 'daves-backward-kill-word)
 
@@ -36,11 +36,14 @@
 ; Line numbers
 (global-linum-mode 1)
 
-;Use revbuffs to reload files when they changed on disk en masse
+; Use revbufs to reload files when they changed on disk en masse
 (load-file "~/emacs/revbufs.el")
 (require 'revbufs)
 (global-unset-key (kbd "M-r"))
 (global-set-key (kbd "M-r") 'revbufs)
+
+; Turn tabs into spaces
+(setq-default indent-tabs-mode nil)
 
 ; Show 80th line
 (load-file "~/emacs/column-marker.el")
