@@ -13,10 +13,6 @@
 ; Set load path
 (add-to-list 'load-path "~/emacs/")
 
-; Set custom emacs for work/home specifics
-(setq custom-file "~/.emacs-custom.el")
-(load custom-file)
-
 ; Get rid of pesky menu bar, tool bar, and scroll bar.  We don't need them.
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -24,6 +20,18 @@
 
 ; Line numbers
 (global-linum-mode 1)
+
+;Use revbuffs to reload files when they changed on disk en masse
+(load-file "~/emacs/revbufs.el")
+(require 'revbufs)
+(global-unset-key (kbd "M-r"))
+(global-set-key (kbd "M-r") 'revbufs)
+
+; Show 80th line
+(load-file "~/emacs/column-marker.el")
+(require 'column-marker)
+(add-hook 'python-mode-hook (lambda () (interactive) (column-marker-1 80)))
+(set-face-background 'column-marker-1 "red")
 
 ; ido Mode
 (ido-mode t)
@@ -50,10 +58,6 @@
 ; Steve Yegge's on-the-fly js compiler for syntax checking!
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
-; I like inverted colors
-(set-background-color "black")
-(set-foreground-color "white")
 
 ; Start a server for emacsclient
 (server-start)
